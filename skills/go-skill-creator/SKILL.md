@@ -12,10 +12,10 @@ description: Go 模块 Skill 生成器。支持分析本地项目或远程 Go �
 ```bash
 # 分析本地项目
 cd /path/to/project
-go run .codebuddy/skills/go-skill-creator/scripts/analyze_module.go -name myproject -verbose
+go run ./scripts/analyze_module.go -name myproject -verbose
 
 # 分析远程 Go 模块（自动下载到临时目录）
-go run .codebuddy/skills/go-skill-creator/scripts/analyze_module.go -module github.com/gogf/gf/v2@latest -name gf -verbose
+go run ./scripts/analyze_module.go -module github.com/gogf/gf/v2@latest -name gf -verbose
 ```
 
 ## 命名规则
@@ -39,12 +39,12 @@ skill-name = <project-name>-skill
 ## 命令行参数
 
 ```bash
-go run analyze_module.go [options] [root_path]
+go run ./scripts/analyze_module.go [options] [root_path]
 
 Options:
   -root string     根项目目录 (默认: ".")
   -name string     技能名称 (默认: 从主模块提取)
-  -output string   输出目录 (默认: .codebuddy/skills/<name>-skill)
+  -output string   输出目录 (默认: 当前目录下的 <name>-skill)
   -module string   Go 模块引用，支持版本 (e.g., github.com/gogf/gf/v2@latest)
   -internal        包含 internal 包 (默认: false)
   -verbose         详细输出 (默认: false)
