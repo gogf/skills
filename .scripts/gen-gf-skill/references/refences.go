@@ -61,6 +61,7 @@ func (m *Manager) GenReferencesTableContent(references *garray.TArray[Reference]
 	tableContent := "| 参考资料 | 资料介绍 |\n| --- | --- |\n"
 	for _, ref := range references.Slice() {
 		referenceName := gstr.TrimLeft(ref.RelativePath, "references/")
+		referenceName = gstr.TrimRight(referenceName, gfile.Ext(referenceName))
 		referencePath := gstr.Replace(ref.RelativePath, " ", "%20")
 		tableContent += fmt.Sprintf(
 			"| [%s](%s) | %s |\n",

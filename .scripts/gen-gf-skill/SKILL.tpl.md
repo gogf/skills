@@ -7,10 +7,10 @@ metadata:
   version: "2.10.0"
 ---
 
-# Go开发参考资料
+# Go参考资料
 
 {{SKILL_REFERENCES}}
 
-# 丰富的Go示例代码
+# Go示例代码
 
 {{SKILL_EXAMPLES}}
