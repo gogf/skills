@@ -1,6 +1,9 @@
 package main
 
 import (
+	`fmt`
+
+	`main/examples`
 	`main/references`
 
 	`github.com/gogf/gf/v2/container/garray`
@@ -11,9 +14,10 @@ import (
 const (
 	skillName      = "gf-master"
 	gfDocsPath     = `/Users/john/Workspace/github/gogf/gf-site/docs/`
-	gfExamplesPath = `/Users/john/Workspace/github/gogf/examples`
-	skillsDirPath  = `/Users/john/Workspace/github/gogf/skills/.github/skills`
+	gfExamplesPath = `/Users/john/Workspace/github/gogf/examples/`
+	skillsDirPath  = `/Users/john/Workspace/github/gogf/skills/.claude/skills`
 	skillTplPath   = `SKILL.tpl.md`
+	skillVersion   = "v0.0.1"
 )
 
 type SkillTplData struct {
@@ -28,21 +32,30 @@ var (
 
 func main() {
 	var (
-		refsManager = references.New(gfDocsPath, skillName, skillsDirPath)
+		refsManager     = references.New(gfDocsPath, skillName, skillsDirPath)
+		examplesManager = examples.New(gfExamplesPath, skillName, skillsDirPath)
 	)
 	// Generate references from document folders.
-	refsArray := garray.NewTArray[references.Reference]()
+	var (
+		refsArray            = garray.NewTArray[references.Reference]()
+		examplesArray        = examplesManager.GenExamples()
+		examplesTableContent = examplesManager.GenExampleTableContent(examplesArray)
+	)
 	for _, docFolder := range docFolders {
 		array := refsManager.GenReferences(docFolder)
 		refsArray.Append(array.Slice()...)
 	}
 	// Save references to new paths.
 	refsManager.SaveReferences(refsArray)
+	examplesManager.SaveExamples(examplesArray)
+
 	updateSkillFileContent(SkillTplData{
 		SkillName:       skillName,
 		SkillReferences: refsManager.GenReferencesTableContent(refsArray),
-		SkillExamples:   "",
+		SkillExamples:   examplesTableContent,
 	})
+
+	fmt.Println("Done!")
 }
 
 // updateSkillFileContent updates or generates the SKILL.md file for the skill.
@@ -53,6 +66,7 @@ func updateSkillFileContent(data SkillTplData) {
 	)
 	skillContent := gstr.ReplaceByMap(skillTplContent, map[string]string{
 		"{{SKILL_NAME}}":       data.SkillName,
+		"{{SKILL_VERSION}}":    skillVersion,
 		"{{SKILL_REFERENCES}}": data.SkillReferences,
 		"{{SKILL_EXAMPLES}}":   data.SkillExamples,
 	})

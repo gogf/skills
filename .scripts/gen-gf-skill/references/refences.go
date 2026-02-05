@@ -11,6 +11,7 @@ import (
 	`github.com/gogf/gf/v2/util/gconv`
 )
 
+// Reference represents a reference document with its metadata.
 type Reference struct {
 	NewAbsPath   string // New absolute path to save the reference file.
 	RelativePath string // Relative path from the original document folder.
@@ -18,11 +19,12 @@ type Reference struct {
 	Content      string // Main content of the reference.
 }
 
+// Manager handles the generation and management of skill references.
 type Manager struct {
-	gfDocsPath     string
-	skillName      string
-	skillsDirPath  string
-	referencesPath string
+	gfDocsPath     string // Path to the gf-site docs directory.
+	skillName      string // Name of the skill.
+	skillsDirPath  string // Path to the skills directory.
+	referencesPath string // Path to the references directory for the skill.
 }
 
 const (
@@ -31,6 +33,7 @@ const (
 	frontMatterPattern     = `^---\n([\s\S]+?)\n---`
 )
 
+// New creates a new Manager instance for handling skill references.
 func New(gfDocsPath, skillName, skillsDirPath string) *Manager {
 	return &Manager{
 		gfDocsPath:     gfDocsPath,
@@ -60,12 +63,11 @@ func (m *Manager) SaveReferences(references *garray.TArray[Reference]) {
 func (m *Manager) GenReferencesTableContent(references *garray.TArray[Reference]) string {
 	tableContent := "| 参考资料 | 资料介绍 |\n| --- | --- |\n"
 	for _, ref := range references.Slice() {
-		referenceName := gstr.TrimLeft(ref.RelativePath, "references/")
-		referenceName = gstr.TrimRight(referenceName, gfile.Ext(referenceName))
+		referenceName := gstr.TrimRight(ref.RelativePath, gfile.Ext(ref.RelativePath))
 		referencePath := gstr.Replace(ref.RelativePath, " ", "%20")
 		tableContent += fmt.Sprintf(
 			"| [%s](%s) | %s |\n",
-			referenceName, referencePath, ref.Description,
+			referenceName, gfile.Join("references", referencePath), ref.Description,
 		)
 	}
 	return tableContent
@@ -105,7 +107,7 @@ func (m *Manager) GenReferences(docFolder string) *garray.TArray[Reference] {
 		}
 		references.Append(Reference{
 			NewAbsPath:   newFilePath,
-			RelativePath: fmt.Sprintf(`references/%s`, relativePath),
+			RelativePath: relativePath,
 			Description:  gconv.String(frontMatter["description"]),
 			Content:      mainContent,
 		})
