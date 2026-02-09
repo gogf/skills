@@ -6,7 +6,7 @@ It's beta version of GoFrame Skills.
 ## Installation
 
 ```bash
-npx skills add github.com/gogf/gf/v2/skills
+npx skills add github.com/gogf/skills
 ```
 
 ## Check Updates
