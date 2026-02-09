@@ -1,5 +1,5 @@
 :::tip
-从 `v2.5` 版本开始，考虑到各个工具命令的解耦性， `gf docker` 工具命令默认不再执行二进制构建编译，而是推荐大家通过 `Makefile` 构建脚本自行组织使用 `gf build, gf gen enums, gf docker` 等命令结合的方式来 **组合使用** 命令（工程项目中提供了对应的 `make build, make enums, make docker` 命令），组合使用更加灵活且易维护。
+从 `v2.5` 版本开始，为提高命令解耦性，`gf docker` 命令默认不再执行二进制编译。推荐使用 `Makefile` 构建脚本组合 `gf build`、`gf gen enums`、`gf docker` 等命令（工程项目中提供了 `make build`、`make enums`、`make docker` 命令），这种方式更灵活且易于维护。
 :::
 ## 使用方式
 
@@ -38,7 +38,16 @@ DESCRIPTION
     You should have docker installed, and there must be a Dockerfile in the root of the project.
 ```
 
-自动编译并生成 `docker` 镜像。非必需 `MAIN` 参数为编译文件路径，默认为 `main.go`。非必需参数 `OPTIONS` 为 `docker build` 命令相同参数及选项。
+自动编译并生成 Docker 镜像。`MAIN` 参数为可选的编译文件路径，默认为 `main.go`。`OPTIONS` 参数为可选的 `docker build` 命令参数及选项。
+
+该命令会自动完成以下流程：
+1. 执行 `gf build` 编译项目为二进制文件
+2. 执行 `docker build` 生成镜像
+3. 可选执行 `docker push` 推送镜像到仓库
+
+前提条件：
+- 系统已安装 Docker
+- 项目根目录存在 Dockerfile 文件
 
 ## 使用示例
 
@@ -93,7 +102,7 @@ d9ff549177a9: Waiting
 
 ## 配置文件示例
 
-大部分场景下，我们推荐使用配置文件来管理工具的配置，在 `hack/config.yaml` 文件中维护，例如 `docker` 命令的配置示例：
+推荐使用配置文件管理工具配置，在 `hack/config.yaml` 文件中维护。`docker` 命令配置示例：
 
 ```yaml
 gfcli:
