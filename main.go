@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	skillName      = "goframe"
+	skillName      = "goframe-v2"
 	gfDocsPath     = `/Users/john/Workspace/github/gogf/gf-site/docs/`
 	gfExamplesPath = `/Users/john/Workspace/github/gogf/examples/`
 	skillsDirPath  = `/Users/john/Workspace/github/gogf/skills/.claude/skills`
