@@ -13,10 +13,10 @@ license: Apache-2.0
   - HTTP项目示例：[user-http-service](./examples/practices/user-http-service)
   - gRPC项目示例：[user-grpc-service](./examples/practices/user-grpc-service)
 
-# Go参考资料
+# Go开发资料
 
-包含完整的GoFrame开发资料，包含各类组件的设计介绍、使用说明、最佳实践、注意事项：[GO示例代码](./references/README.md)
+完整的GoFrame开发资料，包含各类组件的设计介绍、使用说明、最佳实践、注意事项：[GO开发资料](./references/README.md)
 
 # Go示例代码
 
-包含丰富的GoFrame实战代码示例，涵盖HTTP服务、gRPC服务等多种项目类型：[GO示例代码](./examples/README.md)
+丰富的GoFrame实战代码示例，涵盖HTTP服务、gRPC服务等多种项目类型：[GO示例代码](./examples/README.md)
