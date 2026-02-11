@@ -30,7 +30,7 @@ npx skills update
 
 ## Usage Example
 
-### Create a new project with GoFrame skill
+### Create a new project with GoFrame skills
 
 Prompt example:
 
@@ -38,9 +38,9 @@ Prompt example:
 Build a user service with Go, designed with RESTful API interfaces and featuring basic CRUD operations.
 ```
 
-![Create a new project with GoFrame skill in Copilot](.github/assets/img.png)
+![Create a new project with GoFrame skills in Copilot](.github/assets/img.png)
 
-### Create a new feature with GoFrame skill
+### Create a new feature with GoFrame skills
 
 Prompt example:
 
@@ -48,4 +48,4 @@ Prompt example:
 Add JWT authentication to the project. Only users logged in with valid credentials can access protected endpoints like /user/profile for personal information.
 ```
 
-![Create a new feature with GoFrame skill in Copilot](.github/assets/image2.png)
+![Create a new feature with GoFrame skills in Copilot](.github/assets/image2.png)
