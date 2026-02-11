@@ -30,6 +30,9 @@ npx skills update
 
 ## Usage Example
 
+> ℹ️ It's recommended to use Claude Opus 4.6 or later for optimal code generation.
+
+
 ### Create a new project with GoFrame skills
 
 Prompt example:
