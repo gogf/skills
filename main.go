@@ -81,7 +81,7 @@ func updateSkillFileContent(data SkillTplData) {
 // createReferencesIndexFile creates or updates the README.md file in the references directory
 // with the generated references table content.
 func createReferencesIndexFile(referencesIndexContent string) {
-	indexFilePath := gfile.Join(skillsDirPath, skillName, "references", "README.md")
+	indexFilePath := gfile.Join(skillsDirPath, skillName, "references", "index.md")
 	err := gfile.PutContents(indexFilePath, referencesIndexContent)
 	if err != nil {
 		panic(err)
@@ -91,7 +91,7 @@ func createReferencesIndexFile(referencesIndexContent string) {
 // createExamplesIndexFile creates or updates the README.md file in the examples directory
 // with the generated examples table content.
 func createExamplesIndexFile(examplesIndexContent string) {
-	indexFilePath := gfile.Join(skillsDirPath, skillName, "examples", "README.md")
+	indexFilePath := gfile.Join(skillsDirPath, skillName, "examples", "index.md")
 	err := gfile.PutContents(indexFilePath, examplesIndexContent)
 	if err != nil {
 		panic(err)

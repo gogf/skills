@@ -38,7 +38,7 @@ npx skills update
 Prompt example:
 
 ```text
-Build a user service with Go, designed with RESTful API interfaces and featuring basic CRUD operations.
+Build a user service with GoFrame, designed with RESTful API interfaces and featuring basic CRUD operations.
 ```
 
 ![Create a new project with GoFrame skills in Copilot](.github/assets/img.png)
