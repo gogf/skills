@@ -1,11 +1,11 @@
 ## 查询时避免返回对象初始化及 `sql.ErrNoRows` 判断
 
-执行SQL查询时，请避免提前将查询结果初始化，以避免结构对象默认值的影响，避免创建不必要的对象内存。通过返回对象指针 `nil` 判断避免 `sql.ErrNoRows` 使用，降低代码对 `error` 处理的复杂度、统一项目中对空查询结果处理逻辑。
+执行`SQL`查询时，请避免提前将查询结果初始化，以避免结构对象默认值的影响，避免创建不必要的对象内存。通过返回对象指针 `nil` 判断避免 `sql.ErrNoRows` 使用，降低代码对 `error` 处理的复杂度、统一项目中对空查询结果处理逻辑。
 
 一个反面例子：
 
 ```go
-func (s *sTask) GetOne(ctx context.Context, id uint64) (out *entity.ResourceTask, err error) {
+func (s *Service) GetOne(ctx context.Context, id uint64) (out *entity.ResourceTask, err error) {
     out = new(model.TaskDetail)
     err = dao.ResourceTask.Ctx(ctx).WherePri(id).Scan(out)
     if err != nil {
@@ -23,7 +23,7 @@ func (s *sTask) GetOne(ctx context.Context, id uint64) (out *entity.ResourceTask
 建议改进如下：
 
 ```go
-func (s *sTask) GetOne(ctx context.Context, id uint64) (out *entity.ResourceTask, err error) {
+func (s *Service) GetOne(ctx context.Context, id uint64) (out *entity.ResourceTask, err error) {
     err = dao.ResourceTask.Ctx(ctx).WherePri(id).Scan(&out)
     if err != nil {
         return
