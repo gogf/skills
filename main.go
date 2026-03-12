@@ -17,7 +17,6 @@ const (
 	gfExamplesPath = `/Users/john/Workspace/github/gogf/examples/`
 	skillsDirPath  = `/Users/john/Workspace/github/gogf/skills/skills`
 	skillTplPath   = `SKILL.tpl.md`
-	skillVersion   = "v0.0.1"
 )
 
 type SkillTplData struct {
@@ -73,8 +72,7 @@ func updateSkillFileContent(data SkillTplData) {
 		skillFilePath   = gfile.Join(skillsDirPath, skillName, "SKILL.md")
 	)
 	skillContent := gstr.ReplaceByMap(skillTplContent, map[string]string{
-		"{{SKILL_NAME}}":    data.SkillName,
-		"{{SKILL_VERSION}}": skillVersion,
+		"{{SKILL_NAME}}": data.SkillName,
 	})
 	err := gfile.PutContents(skillFilePath, skillContent)
 	if err != nil {
