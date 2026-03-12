@@ -31,6 +31,14 @@ var (
 )
 
 func main() {
+	// Check if the specified paths exist, it is important.
+	if !gfile.Exists(gfDocsPath) {
+		panic(fmt.Sprintf("gf docs path does not exist: %s", gfDocsPath))
+	}
+	if !gfile.Exists(gfExamplesPath) {
+		panic(fmt.Sprintf("gf examples path does not exist: %s", gfExamplesPath))
+	}
+
 	var (
 		refsManager     = references.New(gfDocsPath, skillName, skillsDirPath)
 		examplesManager = examples.New(gfExamplesPath, skillName, skillsDirPath)
