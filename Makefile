@@ -2,13 +2,13 @@
 .PHONY: up
 up:
 	@if git diff --quiet HEAD && git diff --cached --quiet && [ -z "$$(git ls-files --others --exclude-standard)" ]; then \
-		echo "nothing changes"; \
+		echo "No changes to commit"; \
 		exit 0; \
 	fi
 	@git add -A
-	@echo "analysing commit message using claude..."
+	@echo "Analyzing changes and generating commit message via AI..."
 	@MSG=$$(git diff --cached --stat && echo "---" && git diff --cached | head -2000 | \
-		claude -p "analyze git diff and generate a concise english commit message (one line, under 72 chars, lowercase, no quotes)" \
+		claude -p "Analyze the git diff above and generate a concise commit message (single line, max 72 chars, lowercase, no quotes). Output only the commit message itself, nothing else." \
 		--model haiku 2>/dev/null) && \
 	COMMIT_MSG=$$(echo "$$MSG" | tail -1) && \
 	echo "Commit: $$COMMIT_MSG" && \
