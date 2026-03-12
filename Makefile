@@ -8,7 +8,7 @@ up:
 	@git add -A
 	@echo "analysing commit message using claude..."
 	@MSG=$$(git diff --cached --stat && echo "---" && git diff --cached | head -2000 | \
-		claude -p "analyse these git diff content and produce a short commit message" \
+		claude -p "analyze git diff and generate a concise english commit message (one line, under 72 chars, lowercase, no quotes)" \
 		--model haiku 2>/dev/null) && \
 	COMMIT_MSG=$$(echo "$$MSG" | tail -1) && \
 	echo "Commit: $$COMMIT_MSG" && \
