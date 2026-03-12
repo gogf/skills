@@ -15,7 +15,7 @@ const (
 	skillName      = "goframe-v2"
 	gfDocsPath     = `/Users/john/Workspace/github/gogf/gf-site/docs/`
 	gfExamplesPath = `/Users/john/Workspace/github/gogf/examples/`
-	skillsDirPath  = `/Users/john/Workspace/github/gogf/skills/.claude/skills`
+	skillsDirPath  = `/Users/john/Workspace/github/gogf/skills/skills`
 	skillTplPath   = `SKILL.tpl.md`
 	skillVersion   = "v0.0.1"
 )
