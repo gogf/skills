@@ -35,7 +35,6 @@ license: Apache-2.0
   // Bad - never use g.Map for database operations
   dao.Users.Ctx(ctx).Data(g.Map{cols.Uid: uid}).Update()
   ```
-
 ## Code Style Standards
 - **Variable Declarations**: When defining multiple variables, use a `var` block to group them for better alignment and readability:
   ```go
