@@ -54,6 +54,81 @@ license: Apache-2.0
   ```
 - Apply this pattern when you have 3 or more related variable declarations in the same scope.
 
+## Soft Delete & Time Maintenance
+
+GoFrame provides **automatic** soft delete and time maintenance features. When a table contains `created_at`, `updated_at`, or `deleted_at` fields, the ORM handles these automatically.
+
+### Automatic Time Fields
+
+| Field | Auto Behavior |
+|-------|---------------|
+| `created_at` | Auto-written on `Insert/InsertAndGetId`, never modified afterward |
+| `updated_at` | Auto-written on `Insert/Update/Save` |
+| `deleted_at` | Auto-written on `Delete` (soft delete), auto-filtered on queries |
+
+### Critical Rules
+
+**1. NEVER manually set time fields** - GoFrame handles these automatically:
+```go
+// WRONG - redundant manual time setting
+dao.User.Ctx(ctx).Data(do.User{
+    Name:      "john",
+    CreatedAt: gtime.Now(),  // REDUNDANT! Framework handles this
+    UpdatedAt: gtime.Now(),  // REDUNDANT! Framework handles this
+}).Insert()
+
+// CORRECT - let framework handle time fields
+dao.User.Ctx(ctx).Data(do.User{
+    Name: "john",
+}).Insert()
+```
+
+**2. NEVER manually add `WhereNull(cols.DeletedAt)`** - GoFrame auto-adds soft delete filter:
+```go
+// WRONG - redundant soft delete condition
+dao.User.Ctx(ctx).
+    Where(do.User{Status: 1}).
+    WhereNull(cols.DeletedAt).  // REDUNDANT! Framework auto-adds this
+    Scan(&list)
+
+// CORRECT - framework auto-adds deleted_at IS NULL
+dao.User.Ctx(ctx).
+    Where(do.User{Status: 1}).
+    Scan(&list)
+```
+
+**3. Use `Delete()` for soft delete** - Framework converts to `UPDATE SET deleted_at = NOW()`:
+```go
+// CORRECT - use Delete(), framework handles soft delete
+dao.User.Ctx(ctx).Where(do.User{Id: id}).Delete()
+// Actual SQL: UPDATE `sys_user` SET `deleted_at`=NOW() WHERE `id`=?
+
+// WRONG - manual Update with deleted_at
+dao.User.Ctx(ctx).
+    Where(do.User{Id: id}).
+    Data(do.User{DeletedAt: gtime.Now()}).  // REDUNDANT!
+    Update()
+```
+
+### Field Type Support
+
+The `deleted_at` field supports multiple types:
+- **DateTime/Timestamp**: Default, stores deletion time
+- **Integer**: Stores Unix timestamp (seconds)
+- **Boolean**: Stores 0/1 for deleted state
+
+### Configuration (Optional)
+
+Time field names can be customized in `config.yaml`:
+```yaml
+database:
+  default:
+    createdAt: "created_at"   # Custom field name
+    updatedAt: "updated_at"
+    deletedAt: "deleted_at"
+    timeMaintainDisabled: false  # Set true to disable this feature
+```
+
 # GoFrame Documentation
 Complete GoFrame development resources covering component design, usage, best practices, and considerations: [GoFrame Documentation](./references/README.MD)
 
